@@ -1,0 +1,45 @@
+jenkins:
+  remotingSecurity:
+    enabled: true
+  updateCenter:
+    sites:
+      - id: "cap-core-mm"
+        url: "https://jenkins-updates.cloudbees.com/update-center/envelope-core-mm/update-center.json"
+
+kube:
+  podTemplatesConfiguration:
+    templates:
+      - label: "agent"
+
+unclassified:
+  gitHubPluginConfig:
+    configs:
+      - credentialsId: "github-token"
+        name: "GitHub"
+    hookUrl: "$JENKINS_BASE_URL/github-webhook/"
+
+  bundleStorageService:
+    activated: true
+    bundles:
+    - name: "casc-bundle"
+      retriever:
+        SCM:
+          defaultVersion: "main"
+  globalLibraries:
+    libraries:
+      - allowVersionOverride: false
+        defaultVersion: "main"
+        implicit: false
+        includeInChangesets: false
+        name: "pipeline-libraries"
+        retriever:
+          modernSCM:
+            scm:
+              git:
+                credentialsId: "github-key"
+                remote: "git@github.com:ryecarrigan/pipeline-libraries.git"
+  hibernationConfiguration:
+    enabled: false
+    gracePeriod: 300
+  usageStatisticsCloudBees:
+    usageStatisticsCollected: false
